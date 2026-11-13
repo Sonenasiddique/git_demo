@@ -18,6 +18,10 @@ print(df.duplicated())
 print("Columns :" )
 print(df.columns)
 
+
+
+
+
 print("Detail of Age :")
 print(df['Age'].describe())
 
@@ -77,10 +81,12 @@ plt.show()
 sns.histplot(x=df['Chol'], bins=5 , kde=True)
 plt.show()
 
-sns.histplot(x=df['Fbs'] , bins=3 , kde=True)
+fbs_in_cat = df['Fbs'].map({0:'No sugar',1:'Sugar'})
+sns.histplot(x=fbs_in_cat, bins=2 , kde=True)
 plt.show()
 
-sns.histplot(x=df['RestECG'] , bins=4, kde=True)
+Rest_ECG_in_cat=df['RestECG'].map({0:'normal',1:'having st-t wave abonormality',2:'showing probable left ventricular hypertrophy'})
+sns.histplot(x=Rest_ECG_in_cat , bins=3, kde=True)
 plt.show()
 
 sns.histplot(x=df['MaxHR'] , bins=4 , kde=True)
@@ -96,7 +102,8 @@ plt.show()
 sns.histplot(x=df['Slope'] , bins=3 , kde=True)
 plt.show()
 
-sns.histplot(x=df['Ca'] , bins=3 , kde=True)
+ca_in_cat = df['Ca'].map({0:'0_vessele',1:'1_vessele',2:'2_vessele',3:'3_vessele'})
+sns.histplot(x=ca_in_cat , bins=3 , kde=True)
 plt.show()
 
 sns.countplot(x='Thal',data=df, palette='pastel')
@@ -195,4 +202,12 @@ for col in outlier_detection:
 
 df['Thal']=df['Thal'].fillna(df['Thal'].max())
 print(df['Thal'].isnull().sum())
+
+df=pd.get_dummies(df,columns=['ChestPain','Thal'],drop_first=True,dtype=int)
+print(df.head())
+print(df.columns)
+
+
+
+
 
